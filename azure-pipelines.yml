@@ -77,6 +77,6 @@ stages:
                    $(Pipeline.Workspace)/aksfiles/appwithservice.yml
 
                  imagePullSecrets: |
-                   $(imageRepository)
+                   $(imagePullSecret)
                  containers: |
-                   $(containerRegistry)/$(imageRepository):$(tag)                      
+                    app1-nginx=$(containerRegistry)/$(imageRepository):$(tag)                     
