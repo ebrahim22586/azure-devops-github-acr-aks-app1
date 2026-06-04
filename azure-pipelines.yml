@@ -52,7 +52,7 @@ stages:
       displayName: DeployToAKS
       pool:
        vmImage: $(vmImageName)
-      environment:  'stacksimplifyazuredevopsgithubacraksapp1internal-1561.dev'
+      environment:  'env-aks-dev.dev'
       strategy: 
        runOnce:
          deploy:
