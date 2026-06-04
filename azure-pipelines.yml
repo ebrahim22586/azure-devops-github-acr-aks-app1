@@ -79,4 +79,4 @@ stages:
                  imagePullSecrets: |
                    $(imagePullSecret)
                  containers: |
-                    app1-nginx=$(containerRegistry)/$(imageRepository):$(tag)                     
+                    $(containerRegistry)/$(imageRepository):$(tag)                     
