@@ -39,8 +39,8 @@ stages:
           $(tag)
 
 
-    - upload: mainfests
-      artifact: mainfests
+    - upload: aksfiles
+      artifact: aksfiles
 
 
 - stage: Deploy
@@ -68,8 +68,7 @@ stages:
                inputs:
                  action: deploy
                  manifests: |
-                   $(Pipeline.Workspaces)/mainfests/deployment.yml
-                   $(Pipeline.Workspaces)/mainfests/service.yml
+                   $(Pipeline.Workspaces)/mainfests/appwithservice.yml
 
                  imagePullSecrets: |
                    $(imageRepository)
