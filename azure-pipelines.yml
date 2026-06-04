@@ -11,6 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '660a7ac6-4ae2-4071-9db0-e69a9c241c15'
+  kubernetesServiceConnecion: 'a2e6316e-416f-408a-83d1-96777c7a8f95'
   imageRepository: 'ebrahimazuredevopsgithubacraksapp'
   containerRegistry: 'acrforaksun.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
@@ -60,6 +61,7 @@ stages:
                displayName: CreateImageSecret
                inputs:
                   action: createSecret
+                  kubernetesServiceConnection: $(kubernetesServiceConnecion)
                   secretName: $(imagePullSecret)
                   dockerRegistryEndpoint: $(dockerRegistryServiceConnection) 
 
@@ -67,8 +69,9 @@ stages:
                displayName: DeployToAks
                inputs:
                  action: deploy
+                 kubernetesServiceConnection: $(kubernetesServiceConnecion)
                  manifests: |
-                   $(Pipeline.Workspaces)/mainfests/appwithservice.yml
+                   $(Pipeline.Workspaces)/aksfiles/appwithservice.yml
 
                  imagePullSecrets: |
                    $(imageRepository)
