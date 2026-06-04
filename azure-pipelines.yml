@@ -74,7 +74,7 @@ stages:
                  kubernetesServiceConnection: $(kubernetesServiceConnecion)
                  namespace: dev
                  manifests: |
-                   $(Pipeline.Workspaces)/aksfiles/appwithservice.yml
+                   $(Pipeline.Workspace)/aksfiles/appwithservice.yml
 
                  imagePullSecrets: |
                    $(imageRepository)
