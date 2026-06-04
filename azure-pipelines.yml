@@ -37,3 +37,41 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+
+    - upload: mainfests
+      artifact: mainfests
+
+
+- stage: Deploy
+  displayName: DeployStage
+  dependsOn: Build
+  jobs:
+    - deployment: Deploy
+      displayName: DeployToAKS
+      pool:
+       vmImage: $(vmImageName)
+      environment: env-aks-dev
+      strategy: 
+       runOnce:
+         deploy:
+           steps:
+             - task: KubernetesManifest@1
+               displayName: CreateImageSecret
+               inputs:
+                  action: createSecret
+                  secretName: $(imagePullSecret)
+                  dockerRegistryEndpoint: $(dockerRegistryServiceConnection) 
+
+             - task: KubernetesManifest@1
+               displayName: DeployToAks
+               inputs:
+                 action: deploy
+                 manifests: |
+                   $(Pipeline.Workspaces)/mainfests/deployment.yml
+                   $(Pipeline.Workspaces)/mainfests/service.yml
+
+                 imagePullSecrets: |
+                   $(imageRepository)
+                 containers: |
+                   $(containerRegistry)/$(imageRepository):$(tag)                      
