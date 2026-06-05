@@ -80,6 +80,7 @@ stages:
           command: 'create'
           secretType: 'dockerRegistry'
           containerRegistryType: 'Azure Container Registry'
+          azureSubscriptionEndpointForSecrets: '$(AzureSub)'
           azureContainerRegistry: 'acrforaksun.azurecr.io'
           secretName: '$(secretName)'
 
