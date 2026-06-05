@@ -72,18 +72,15 @@ stages:
           artifactName: 'aksfiles'
           downloadPath: '$(Build.ArtifactStagingDirectory)'
 
-      - task: Kubernetes@1
+      - task: KubernetesManifest@1
         inputs:
-          connectionType: 'Kubernetes Service Connection'
-          kubernetesServiceEndpoint: 'dev-ns-k8s-aks-svc-conn'
-          namespace: 'dev'
-          command: 'create'
-          secretType: 'dockerRegistry'
-          containerRegistryType: 'Azure Container Registry'
-          azureSubscriptionEndpointForSecrets: '[Hussein-Ibrahim] Test Azure Sponsorship [10k] (aa0ef9d7-8db5-407a-86cf-f8ee0d25d528)'
-          azureContainerRegistry: 'acrforaksun.azurecr.io'
-          secretName: '$(secretName)'
-          forceUpdate: true 
+           action: 'createSecret'
+           connectionType: 'kubernetesServiceConnection'
+           kubernetesServiceConnection: 'dev-ns-k8s-aks-svc-conn'
+           namespace: 'dev'
+           secretType: 'dockerRegistry'
+           secretName: '$(secretName)'
+           dockerRegistryEndpoint: '$(dockerRegistryServiceConnection)'
 
 
       - task: KubernetesManifest@1
