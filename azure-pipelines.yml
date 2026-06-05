@@ -83,6 +83,7 @@ stages:
           azureSubscriptionEndpointForSecrets: '[Hussein-Ibrahim] Test Azure Sponsorship [10k] (aa0ef9d7-8db5-407a-86cf-f8ee0d25d528)'
           azureContainerRegistry: 'acrforaksun.azurecr.io'
           secretName: '$(secretName)'
+          forceUpdate: true 
 
 
       - task: KubernetesManifest@1
