@@ -29,12 +29,10 @@ steps:
   artifact: aksfiles
 
 - bash: |
-    IMAGE_TAG=$(cat $(Pipeline.Workspace)/CI/aksfiles/imageTag.txt)
-
-    echo "Image Tag = $IMAGE_TAG"
-
+    IMAGE_TAG=$(cat $(Pipeline.Workspace)/CI/aksfiles/imageTag.txt | tr -d '[:space:]')
+    echo "Trimmed Image Tag = [$IMAGE_TAG]"
     echo "##vso[task.setvariable variable=imageTag]$IMAGE_TAG"
-  displayName: Read Image Tag
+  displayName: Read and Trim Image Tag
 
 - task: KubernetesManifest@1
   inputs:

@@ -48,12 +48,16 @@ stages:
         OverWrite: true
      
     - bash: |
-        echo $(Build.BuildId) > $(Build.ArtifactStagingDirectory)/imageTag.txt
-      displayName: Save Image Tag
+        printf '%s' "$(Build.BuildId)" > $(Build.ArtifactStagingDirectory)/imageTag.txt
+      displayName: Save Image Tag        # ← no trailing newline
 
     - bash: |
+        echo "=== imageTag.txt content ==="
         cat $(Build.ArtifactStagingDirectory)/imageTag.txt
-      displayName: Verify Image Tag
+        echo ""                          # newline after for readability
+        echo "=== HEX verify (should have NO 0a at end) ==="
+        xxd $(Build.ArtifactStagingDirectory)/imageTag.txt
+      displayName: Verify Image Tagg
     
     - bash: echo "ArtifactsDirectory Content after"; ls -R $(Build.ArtifactStagingDirectory)
     - task: PublishBuildArtifacts@1
