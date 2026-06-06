@@ -7,7 +7,7 @@ trigger: none
 resources:
   pipelines:
     - pipeline: CI
-      source: 'BuildPushToACR-Publish-k8s-manifests-to-AzurePipelines'
+      source: 'ebrahim22586.azure-devops-github-acr-aks-app1'
       trigger: true 
 
 variables:
