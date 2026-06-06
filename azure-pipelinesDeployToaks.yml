@@ -2,13 +2,16 @@
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
-trigger: none
+
 
 resources:
   pipelines:
-    - pipeline: CI
-      source: 'ebrahim22586.azure-devops-github-acr-aks-app1'
-      trigger: true 
+  - pipeline: 'CI'
+    source: ebrahim22586.azure-devops-github-acr-aks-app1
+    trigger:
+      branches:
+        include:
+        - main
 
 variables:
   dockerRegistryServiceConnection: 'f4982ffe-8e2d-4b57-bfe8-2fcaaf341eb5'
@@ -49,6 +52,6 @@ steps:
     connectionType: 'kubernetesServiceConnection'
     kubernetesServiceConnection: 'dev-ns-k8s-aks-svc-conn'
     namespace: 'dev'
-    manifests: '$(Build.ArtifactStagingDirectory)/aksfiles/appwithservice.yml'
+    manifests: '$(Pipeline.Workspace)/CI/aksfiles/appwithservice.yml'
     containers: '$(containerRegistry)/$(imageRepository):$(imageTag)'
     imagePullSecrets: '$(secretName)'
