@@ -45,7 +45,14 @@ stages:
         Contents: '**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
         OverWrite: true
+     
+    - bash: |
+        echo $(Build.BuildId) > $(Build.ArtifactStagingDirectory)/imageTag.txt
+      displayName: Save Image Tag
 
+    - bash: |
+        cat $(Build.ArtifactStagingDirectory)/imageTag.txt
+      displayName: Verify Image Tag
     
     - bash: echo "ArtifactsDirectory Content after"; ls -R $(Build.ArtifactStagingDirectory)
     - task: PublishBuildArtifacts@1
