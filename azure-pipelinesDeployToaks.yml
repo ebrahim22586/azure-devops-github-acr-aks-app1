@@ -2,17 +2,16 @@
 # Build and push an image to Azure Container Registry
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
-trigger: 
-  - main 
 
-#resources:
-#  pipelines:
-#  - pipeline: 'CI'
-#    source: 'ebrahim22586.azure-devops-github-acr-aks-app1'
-#    trigger:
-#      branches:
-#        include:
-#        - main
+
+resources:
+  pipelines:
+  - pipeline: 'CI'
+    source: 'CIPipeline'
+    trigger:
+      branches:
+        include:
+        - main
 
 variables:
   dockerRegistryServiceConnection: 'f4982ffe-8e2d-4b57-bfe8-2fcaaf341eb5'
